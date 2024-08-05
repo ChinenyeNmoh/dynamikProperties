@@ -1,5 +1,6 @@
 //Main layout @ means root directory of the project
 import "@/assets/styles/globals.css"
+import Header from "@/components/Header";
 
 //Meta tags
 export const metadata = {
@@ -15,7 +16,10 @@ const MainLayout =({children}) => {
   return (
     <html lang='en'>
     <body>
-      <main>{children}</main>
+      <main>
+        <Header />
+        {children}
+        </main>
     </body>
   </html>
   )

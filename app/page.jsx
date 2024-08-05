@@ -1,8 +1,13 @@
 import React from 'react'
+import Link from 'next/link'
+
 
 const Homepage = () => {
+  console.log('Homepage')
   return (
-    <div className='bg-slate-500 mt-4 w-28 rounded-md ml-4 p-4'>HomePage</div>
+    <div>HomePage
+    
+    </div>
   )
 }
 
