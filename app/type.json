@@ -1,0 +1,14 @@
+[
+    {
+        "_id": 1,
+        "name": "flats & apartments"
+    },
+    {
+        "_id": 2,
+        "name": "house"
+    },
+    {
+        "_id": 3,
+        "name": "commercial properties"
+    }
+]

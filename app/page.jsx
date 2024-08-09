@@ -1,12 +1,14 @@
-import React from 'react'
 import Link from 'next/link'
+import InfoBoxes from '@/components/InfoBoxes'
+import Hero from '@/components/Hero'
 
 
 const Homepage = () => {
   console.log('Homepage')
   return (
-    <div>HomePage
-    
+    <div>
+      <Hero />
+      <InfoBoxes />
     </div>
   )
 }

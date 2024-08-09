@@ -1,0 +1,14 @@
+[
+    {
+        "_id": 1,
+        "name": "buy"
+    },
+    {
+        "_id": 2,
+        "name": "rent"
+    },
+    {
+        "_id": 3,
+        "name": "shortlet"
+    }
+]
