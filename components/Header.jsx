@@ -3,11 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+//import category from '@/category.json';
+//import type from '@/type.json';
 
 const Header = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [showBuy, setShowBuy] = useState(false);
   const [showRent, setShowRent] = useState(false)
   const [showShortlet, setShowShortlet] = useState(false)
@@ -38,7 +40,15 @@ const Header = () => {
       : 'text-white hover:text-white rounded-md px-3 py-2';
 
   return (
-    <nav className="bg-slate-900 border-b border-slate-900">
+    <nav 
+    className="bg-slate-900 border-b border-slate-900 mb-20"
+    onMouseLeave={() => {
+      setShowRent(false)
+      setShowBuy(false)
+      setShowShortlet(false)
+    }
+    }
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
@@ -83,9 +93,12 @@ const Header = () => {
             </Link>
             {/* <!-- Desktop Menu Hidden below md screens --> */}
             <div className="hidden md:ml-10 md:block">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2"
+              
+              >
               <div 
                 className="relative"
+                
                 >
                   
                   <button
@@ -99,6 +112,7 @@ const Header = () => {
                       setShowShortlet(false)
                     }
                     }
+                    
                     
                   >
                     <span className="sr-only">Open buy menu</span>
@@ -128,7 +142,7 @@ const Header = () => {
                       aria-labelledby="buy-menu-button"
                       tabIndex="-1"
                     >
-                      <Link href="#" className={`${isActive('#')} block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600`} role="menuitem" tabIndex="-1" id="buy-menu-item-0">
+                      <Link href="/properties" className={`${isActive('#')} block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600`} role="menuitem" tabIndex="-1" id="buy-menu-item-0">
                         All
                       </Link>
                       <Link href="#" className={`${isActive('#')} block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600`} role="menuitem" tabIndex="-1" id="buy-menu-item-1">
@@ -185,7 +199,7 @@ const Header = () => {
                       aria-labelledby="rent-menu-button"
                       tabIndex="-1"
                     >
-                      <Link href="#" className={`${isActive('#')} block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600`} role="menuitem" tabIndex="-1" id="rent-menu-item-0">
+                      <Link href="/properties" className={`${isActive('#')} block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600`} role="menuitem" tabIndex="-1" id="rent-menu-item-0">
                         All
                       </Link>
                       <Link href="#" className={`${isActive('#')} block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600`} role="menuitem" tabIndex="-1" id="rent-menu-item-1">

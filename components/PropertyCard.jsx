@@ -11,12 +11,12 @@ import {
 const PropertyCard = ({ property }) => {
   const getRateDisplay = () => {
     const { rates } = property;
-    if (rates.monthly) {
-      return `$${rates.monthly.toLocaleString()}/mo`;
-    } else if (rates.weekly) {
-      return `$${rates.weekly.toLocaleString()}/wk`;
-    } else if (rates.nightly) {
-      return `$${rates.nightly.toLocaleString()}/night`;
+    if (rates.salePrice) {
+      return `N${rates.salePrice.toLocaleString()}`;
+    } else if (rates.yearly) {
+      return `N${rates.yearly.toLocaleString()}`;
+    } else if (rates.daily) {
+      return `N${rates.daily.toLocaleString()}/night`;
     }
   };
 
@@ -52,15 +52,6 @@ const PropertyCard = ({ property }) => {
             <FaRulerCombined className='md:hidden lg:inline' />
             {property.square_feet}{' '}
             <span className='md:hidden lg:inline'>sqft</span>
-          </p>
-        </div>
-
-        <div className='flex justify-center gap-4 text-green-900 text-sm mb-4'>
-          <p>
-            <FaMoneyBill className='md:hidden lg:inline' /> Weekly
-          </p>
-          <p>
-            <FaMoneyBill className='md:hidden lg:inline' /> Monthly
           </p>
         </div>
 

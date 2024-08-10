@@ -457,8 +457,8 @@
      "email": "matthew@gmail.com",
      "phone": "215-555-5555"
    },
-   "images": ["j1.jpg", "j2.jpg", "j3.jpg"],
-   "is_featured": false,
+   "images": ["j3.jpg", "j2.jpg", "j1.jpg"],
+   "is_featured": true,
    "is_luxury": true,
    "createdAt": "2024-01-10T00:00:00.000Z",
    "updatedAt": "2024-01-10T00:00:00.000Z"
@@ -529,7 +529,7 @@
    "email": "matthew@gmail.com",
    "phone": "215-555-5555"
  },
- "images": ["j1.jpg", "j2.jpg", "j3.jpg"],
+ "images": [ "j2.jpg", "j3.jpg"],
  "is_featured": true,
  "is_luxury": false,
  "createdAt": "2024-01-10T00:00:00.000Z",
