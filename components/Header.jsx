@@ -3,16 +3,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-//import category from '@/category.json';
-//import type from '@/type.json';
+import { useSession } from 'next-auth/react';
 
 const Header = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [showBuy, setShowBuy] = useState(false);
   const [showRent, setShowRent] = useState(false)
   const [showShortlet, setShowShortlet] = useState(false)
+  //check if user is logged in
+  const { data: session } = useSession();
+
 
 //Lets close the mobile menu when the screen is resized to a larger screen
   useEffect(() => {
@@ -41,7 +42,7 @@ const Header = () => {
 
   return (
     <nav 
-    className="bg-slate-900 border-b border-slate-900 mb-20"
+    className="bg-slate-900 border-b border-slate-900 "
     onMouseLeave={() => {
       setShowRent(false)
       setShowBuy(false)
@@ -55,7 +56,7 @@ const Header = () => {
             {/* <!-- Mobile menu button--> */}
             <button
               type="button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="relative inline-flex  items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded={showMobileMenu ? 'true' : 'false'}
               onClick={() => setShowMobileMenu(!showMobileMenu)}
@@ -87,7 +88,7 @@ const Header = () => {
                 width={40}
                 height={40}
               />
-              <span className="hidden md:block text-white text-2xl font-bold ml-2 mr-10">
+              <span className="hidden md:block text-white text-2xl font-bold ml-2 mr-10 md:mr-0">
                 dynamik Properties
               </span>
             </Link>
@@ -98,12 +99,10 @@ const Header = () => {
               >
               <div 
                 className="relative"
-                
                 >
-                  
                   <button
                     type="button"
-                    className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white z-50"
                     aria-controls="buy-menu"
                     aria-expanded={showBuy ? 'true' : 'false'}
                     onMouseEnter={() => {
@@ -136,7 +135,7 @@ const Header = () => {
                   {showBuy && (
                     <div
                       id="buy-menu"
-                      className="absolute left-0 mt-2 w-48 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      className="absolute left-0 mt-2 w-48 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                       role="menu"
                       aria-orientation="vertical"
                       aria-labelledby="buy-menu-button"
@@ -161,7 +160,7 @@ const Header = () => {
                 <div className="relative">
                   <button
                     type="button"
-                    className="relative ml-4 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    className="relative ml-4 md:ml-0 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white z-50"
                     aria-controls="buy-menu"
                     aria-expanded={showRent ? 'true' : 'false'}
                     onMouseEnter={() => {
@@ -193,7 +192,7 @@ const Header = () => {
                   {showRent && (
                     <div
                       id="rent-menu"
-                      className="absolute left-0 mt-2 w-48 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      className="absolute left-0 mt-2 w-48 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                       role="menu"
                       aria-orientation="vertical"
                       aria-labelledby="rent-menu-button"
@@ -218,7 +217,7 @@ const Header = () => {
                 <div className="relative">
                   <button
                     type="button"
-                    className="relative ml-4 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    className="relative ml-4 md:ml-0 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white z-50"
                     aria-controls="shortlet-menu"
                     aria-expanded={showShortlet ? 'true' : 'false'}
                     onMouseEnter={() => {
@@ -249,7 +248,7 @@ const Header = () => {
                   {showShortlet && (
                     <div
                       id="shortlet-menu"
-                      className="absolute left-0 mt-2 w-48 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      className="absolute left-0 mt-2 w-48 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                       role="menu"
                       aria-orientation="vertical"
                       aria-labelledby="shortlet-menu-button"
@@ -272,26 +271,19 @@ const Header = () => {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!loggedIn && (
-            <div className="hidden md:block md:ml-6">
-              <div className="flex items-center">
-                
-                <button className="flex items-center text-black bg-indigo-200 hover:bg-blue-400 hover:text-white rounded-md px-3 py-2">
-                  <Image
-                    src="/images/download.png"
-                    alt="Logo"
-                    width={25}
-                    height={20}
-                    className="mr-2"
-                  />
-                  <span>Login or Register</span>
-                </button>
-              </div>
-            </div>
+          {!session && (
+            <>
+            <Link href="/register" className="hidden md:block text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
+            Sign Up
+            </Link>
+            <Link href="/login" className="hidden md:block text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
+            Sign In
+            </Link>
+            </>
           )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
-          {loggedIn && (
+          {session && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="messages.html" className="relative group">
                 <button
@@ -537,17 +529,15 @@ const Header = () => {
                   )}
                 </div>
               </div>
-            {!loggedIn && (
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-                <Image
-                  src="/images/download.png"
-                  alt="Logo"
-                  width={25}
-                  height={20}
-                  className="mr-2"
-                />
-                <span>Login or Register</span>
-              </button>
+            {!session && (
+               <>
+               <Link href="/register" className="block text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
+               Sign Up
+               </Link>
+               <Link href="/login" className="block text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
+               Sign In
+               </Link>
+               </>
             )}
           </div>
       )}

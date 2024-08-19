@@ -1,10 +1,13 @@
 import PropertyCard from '@/components/PropertyCard'
 import Hero from '@/components/Hero'
-import properties from './properties.json'
 import Link from "next/link"
+import connectDB from '@/config/db'
+import Property from '@/models/property'
 
-const Homepage = () => {
-  const homeProperties = properties.filter((property) => property.is_featured === true)
+const Homepage = async() => {
+  connectDB();
+  const homeProperties = await Property.find({is_featured: true}).lean();
+  
   return (
     <div>
       <Hero />

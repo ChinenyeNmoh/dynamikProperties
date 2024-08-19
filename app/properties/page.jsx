@@ -1,13 +1,13 @@
-
-import properties from "../properties.json"
 import PropertyCard from '@/components/PropertyCard'
+import connectDB from '@/config/db'
+import Property from '@/models/property'
 
 
 // /properties route
-const Propertiespage = () => {
-
-    
-    
+const Propertiespage = async () => {
+  await connectDB();
+ 
+  const properties = await Property.find({}).lean(); //lean() method returns a plain JavaScript object, not a Mongoose document
   return (
     <>
     <section className='px-4 py-6'>
