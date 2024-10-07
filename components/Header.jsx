@@ -3,16 +3,57 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { logOut } from '@/app/actions/register';
+import Swal from 'sweetalert2';
 
 const Header = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBuy, setShowBuy] = useState(false);
   const [showRent, setShowRent] = useState(false)
+  const router = useRouter();
+  const [session, setSession] = useState(null);
   const [showShortlet, setShowShortlet] = useState(false)
-  //check if user is logged in
-  const { data: session } = useSession();
+  const { data, status } = useSession();
+  const user = data?.user;
+  
+  useEffect(() => {
+    if ( typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('userInfo');
+      if (storedUser) {
+        setSession(JSON.parse(storedUser));
+      }
+    } 
+  }, [ ]);
+
+  console.log('session:', session);
+
+  const deleteHandler = async () => {
+    const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You will be logged out",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#F8444F",
+        cancelButtonColor: "#6b7280",
+        confirmButtonText: "Yes, Delete"
+    });
+
+    if (result.isConfirmed) {
+        setShowProfileMenu(false);
+        localStorage.removeItem('userInfo');
+        if (user) {
+         
+            signOut({ callbackUrl: '/' });
+        } else {
+            await logOut();
+            router.push('/');
+            window.location.reload(); // Refresh the page
+        }
+    }
+};
 
 
 //Lets close the mobile menu when the screen is resized to a larger screen
@@ -271,7 +312,7 @@ const Header = () => {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!session && (
+          {(!session  && !user && status !== 'loading') && (
             <>
             <Link href="/register" className="hidden md:block text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
             Sign Up
@@ -283,7 +324,7 @@ const Header = () => {
           )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
-          {session && (
+          {(session  || user) && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="messages.html" className="relative group">
                 <button
@@ -345,10 +386,16 @@ const Header = () => {
                     <Link href="/profile" className="block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600" role="menuitem" tabIndex="-1" id="user-menu-item-0">
                       Your Profile
                     </Link>
+                    <Link href="/properties/add" className="block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600" role="menuitem" tabIndex="-1" id="user-menu-item-0">
+                      Add Properties
+                    </Link>
                     <Link href="/saved-properties" className="block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600" role="menuitem" tabIndex="-1" id="user-menu-item-2">
                       Saved Properties
                     </Link>
-                    <button className="block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600" role="menuitem" tabIndex="-1" id="user-menu-item-2">
+                    <button
+                      onClick={deleteHandler}
+                     className="block px-4 py-2 text-sm text-white font-bold hover:bg-blue-600" role="menuitem" tabIndex="-1" id="user-menu-item-2"
+                     >
                       Sign Out
                     </button>
                   </div>
@@ -529,7 +576,7 @@ const Header = () => {
                   )}
                 </div>
               </div>
-            {!session && (
+            {(!session && !user && status !== 'loading') && (
                <>
                <Link href="/register" className="block text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2">
                Sign Up

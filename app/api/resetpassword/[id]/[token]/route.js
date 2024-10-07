@@ -14,7 +14,7 @@ export  const GET = async (req, { params }) => {
             return NextResponse.redirect(redirectUrl);
         }
     
-        const passwordToken = await Token.findOne({ userId, token });
+        const passwordToken = await Token.findOne({ userId, token, type: 'passwordReset' });
         if (!passwordToken) {
             const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/forgotpassword`;
             const redirectWithMessage = `${redirectUrl}?error=${encodeURIComponent('Invalid or expired token. Reset password again')}`;

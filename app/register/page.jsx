@@ -8,6 +8,7 @@ import { useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import {registerUser} from '../actions/register';
 
+
 const Register = () => {
 
   const clientCaptcha = process.env.NEXT_PUBLIC_CLIENT_CAPTCHA;
@@ -49,7 +50,7 @@ const Register = () => {
   return (
     <>
       <div className="container mx-auto h-auto">
-        <div className="w-full max-w-xl mx-auto bg-white shadow-md shadow-transparent rounded-lg border mt-14">
+        <div className="w-full max-w-xl mx-auto bg-gray-900 text-white shadow-md shadow-transparent rounded-lg border mt-14">
           <h1 className="text-center mt-3 font-bold text-3xl mb-5">Sign Up</h1>
           <div>
             <form onSubmit={handleSubmit}>
@@ -75,7 +76,7 @@ const Register = () => {
                   </label>
                   <input
                     type="text"
-                    id="email"
+                    id="email1"
                     placeholder="Johndoe@email.com"
                     value={email}
                     required={true}
@@ -117,7 +118,7 @@ const Register = () => {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 left-48 lg:left-60 md:left-60 flex items-center text-black"
+                      className="absolute inset-y-0 left-48 lg:left-60 md:left-60 flex items-center text-white /></div>"
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -140,7 +141,7 @@ const Register = () => {
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                     className="absolute inset-y-0 left-48 lg:left-56 md:left-56 flex items-center text-black"
+                     className="absolute inset-y-0 left-48 lg:left-56 md:left-56 flex items-center text-white"
                     >
                       {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>

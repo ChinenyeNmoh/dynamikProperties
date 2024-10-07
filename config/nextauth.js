@@ -67,12 +67,17 @@ export const authOptions = {
         const user = await User.findOne({ 'google.email ': session.user.email });
         if (user) {
           // 2. Assign the user id to the session
-          session.user.id = user._id.toString();
+          session.user._id = user._id.toString();
+          // 3. Add additional user information to the session
+          session.user.name = user.google.fullName || user.local.fullName;
+          session.user.email = user.google.email || user.local.email;
+          session.user.isAdmin = user.isAdmin;
+          session.user.bookmarks = user.bookmarks;
         }
         return session;
       } catch (error) {
         console.error('Error during session callback:', error);
-        return session;  // Return the session object even if an error occurs
+        return session; 
       }
     },
   },

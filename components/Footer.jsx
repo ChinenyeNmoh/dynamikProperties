@@ -30,7 +30,7 @@ const Footer = () => {
               About Us
             </h3>
           </div>
-          <p className="italic p-3 text-sky-100">
+          <p className="italic p-3 text-sky-100 mx-4">
             DynamikProperties specialize in offering a diverse range of properties that cater to every lifestyle and budget. Whether you're looking for a cozy apartment, a luxurious villa, or a family-friendly house, DynamikProperties has the ideal match for you. Our commitment to excellence, attention to detail, and customer-centric approach ensure a seamless and rewarding real estate experience.
             <br />
             <br />

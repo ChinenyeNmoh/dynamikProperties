@@ -14,7 +14,7 @@ export const GET = async (req, { params }) => {
       return NextResponse.redirect(redirectUrl);
     }
 
-    const emailToken = await Token.findOne({ userId, token });
+    const emailToken = await Token.findOne({ userId, token,type: 'verification' });
     if (!emailToken) {
       const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/login/?error=${encodeURIComponent('Invalid or expired token. Verify email again')}`;
       return NextResponse.redirect(redirectUrl);

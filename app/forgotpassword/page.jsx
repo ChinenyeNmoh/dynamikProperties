@@ -4,12 +4,14 @@ import { forgotPassword } from '../actions/register';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSearchParams } from 'next/navigation'
+import LoadingPage from '../loading';
 
 
 
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const searchParams = useSearchParams();
 const error = searchParams.get('error');
   
@@ -24,22 +26,26 @@ const error = searchParams.get('error');
     const handleSubmit = async (e) => {
     e.preventDefault();
     try{
+      setLoading(true);
         const res = await forgotPassword(email);
         console.log(res);
         toast.success(res.message);
+        setLoading(false);
 
     }catch(err){
         toast.error(err.message || 'An error occurred while sending password reset email');
+        setLoading(false);
     }
   };
  
   return (
     <>
       <div className="container mx-auto h-auto">
-        <div className="w-full max-w-md mx-auto bg-white shadow-md shadow-transparent rounded-lg border mt-14">
+        <div className="w-full max-w-md mx-auto bg-gray-900 text-white shadow-md shadow-transparent rounded-lg border mt-14">
           <h1 className="text-center mt-3 font-bold text-3xl mb-5">Forgot Password</h1>
           <div>
             <form onSubmit={handleSubmit}>
+              {loading && <LoadingPage />}
               <div className="mb-4">
                 <label htmlFor="forgotPasswordemail" className="block">
                   <span className="block font-bold text-base ml-8 mb-2">Email</span>
@@ -59,7 +65,7 @@ const error = searchParams.get('error');
                  <button
                  type="submit"
                  disabled={!email}
-                 className='bg-blue-600 text-white p-2 rounded-md block disabled:opacity-40'>
+                 className='bg-blue-600 text-white p-2 rounded-md block disabled:opacity-40 font-bold'>
                    Send
                  </button>
                 </div>

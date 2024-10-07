@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import Link from "next/link"
 import connectDB from '@/config/db'
 import Property from '@/models/property'
+import {getUser} from '@/utils/protect'
 
 const Homepage = async() => {
   connectDB();

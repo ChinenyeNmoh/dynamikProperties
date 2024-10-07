@@ -1,26 +1,27 @@
 import { model, models, Schema } from 'mongoose';
 
 const TokenSchema = new Schema({
-    token: {
-        type: String,
-        required: true,
-        unique: true
-    },
     userId: {
-        required: true,
-        unique: true,
         type: Schema.Types.ObjectId,
-        ref: 'User'  
+        required: true,
+        ref: "user",
+        unique: true,
     },
-    expireAt: {
+    token: { 
+        type: String,
+        required: true 
+    },
+    type: { 
+        type: String, 
+        enum: ['verification', 'passwordReset'], 
+        required: true 
+      },
+    expireAt: { 
         type: Date,
-        index: true,
-        expires: 24 * 60 * 60,  // Expire after 24 hours
-        default: Date.now
+        expires:   60 * 60,
+        index: true, 
+        default: Date.now,
     }
-},
-{
-    timestamps: true  
 });
 
 const Token = models.Token || model('Token', TokenSchema);
