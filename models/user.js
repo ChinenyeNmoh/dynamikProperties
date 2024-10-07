@@ -83,6 +83,6 @@ userSchema.methods.isPasswordMatched = async function (enteredPassword) {
 };
 
 // Check if the model already exists to avoid recompilation
-const User = models.User || model('User', userSchema);
+const User = models?.User || model('User', userSchema);
 
 export default User

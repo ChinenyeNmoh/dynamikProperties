@@ -1,49 +1,31 @@
+import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/config/nextauth';
-import { jwtVerify } from 'jose';
+import getJwtToken from './utils/getToken';
 
 // Middleware function
 export async function middleware(request) {
+  console.log('Middleware request initiated.');
+
   try {
 
-    const cookieStore = cookies();
-    const token = cookieStore.get('jwtPropertyToken')
-    console.log("Token from cookies:", token);
-    // Get session from NextAuth
-    const session = await getServerSession(authOptions, request);
+     // Check for JWT token in cookies
+    const tokenJwt = request.cookies.get('jwtPropertyToken')?.value;
 
-    console.log("Session:", session);
-    console.log("Token from cookies:", token);
+    // Retrieve token from NextAuth JWT (cookie or Authorization header)
+    const tokenNextAuth = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
 
-    // Check if token is available
-    if (token) {
-      try {
-        // Verify the token
-        const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
-        const user = payload?.user;
+    // Validate user either via session or token
+    const userFromToken = await getJwtToken(tokenJwt);
 
-        // If valid user exists, continue the request
-        if (user) {
-          return NextResponse.next();
-        }
-      } catch (error) {
-        console.error("JWT verification error:", error.message);
-        return NextResponse.redirect('/login');
-      }
+    if (tokenNextAuth || userFromToken) {
+      return NextResponse.next();
+    } else {
+      // No token, redirect to login
+      return NextResponse.redirect(new URL('/login', request.url));
     }
-
-    // If token is missing, check session
-    if (!session) {
-      // No session and no valid token, redirect to login
-      return NextResponse.redirect('/login');
-    }
-
-    // Continue to the next middleware or requested page
-    return NextResponse.next();
   } catch (error) {
-    console.error("Error in middleware:", error.message);
-    return NextResponse.redirect('/login');
+    console.error('Error in middleware authentication:', error.message);
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
