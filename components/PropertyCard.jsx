@@ -11,12 +11,12 @@ import {
 const PropertyCard = ({ property }) => {
   const getRateDisplay = () => {
     const { rates } = property;
-    if (rates.salePrice) {
-      return `N${rates.salePrice.toLocaleString()}`;
-    } else if (rates.yearly) {
-      return `N${rates.yearly.toLocaleString()}`;
-    } else if (rates.daily) {
-      return `N${rates.daily.toLocaleString()}/night`;
+    if (rates?.salePrice) {
+      return `N${rates?.salePrice.toLocaleString()} sales price`;
+    } else if (rates?.yearly) {
+      return `N${rates?.yearly.toLocaleString()} yearly`;
+    } else if (rates?.daily) {
+      return `N${rates?.daily.toLocaleString()}/night`;
     }
   };
 

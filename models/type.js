@@ -1,4 +1,4 @@
-import {model, Schema} from 'mongoose';
+import {model, models, Schema} from 'mongoose';
 
 const TypeSchema = new Schema({
     name: {
@@ -14,4 +14,5 @@ const TypeSchema = new Schema({
 
 )
 
-export default model('Type', TypeSchema);
+const Type = models?.Type ||  model('Type', TypeSchema);
+export default Type;

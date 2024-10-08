@@ -62,7 +62,7 @@ const PropertySchema = new Schema(
       yearly: {
         type: Number,
       },
-      monthly: {
+      salePrice: {
         type: Number,
       },
     },
@@ -95,7 +95,6 @@ const PropertySchema = new Schema(
     timestamps: true,
   }
 );
-
-const Property = models.Property ||  model('Property', PropertySchema);
+const Property = models?.Property ||  model('Property', PropertySchema);
 
 export default Property;

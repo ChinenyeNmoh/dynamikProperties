@@ -28,8 +28,6 @@ const Header = () => {
     } 
   }, [ ]);
 
-  console.log('session:', session);
-
   const deleteHandler = async () => {
     const result = await Swal.fire({
         title: "Are you sure?",
