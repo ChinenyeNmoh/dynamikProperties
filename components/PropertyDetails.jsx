@@ -7,11 +7,12 @@ import {
   FaMapMarker,
 } from 'react-icons/fa';
 
+
 const PropertyDetails = ({ property }) => {
   return (
     <main>
       <div className="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
-        <div className="text-gray-500 mb-4">{property.type}</div>
+        <div className="text-gray-500 mb-4">{property?.type?.name}</div>
         {property.category === 'rent' ? (
           <h2 className='font-bold text-red-600'>For Rent</h2>
         ) : property.category === 'buy' ? (
@@ -79,7 +80,12 @@ const PropertyDetails = ({ property }) => {
           ))}
         </ul>
       </div>
-      <div className="bg-white p-6 rounded-lg shadow-md mt-6"></div>
+      <div className="bg-white p-6 rounded-lg shadow-md mt-6">
+  <h3 className="text-lg font-bold mb-6">
+    Posted: {property?.createdAt ? new Date(property.createdAt).toLocaleDateString() : 'N/A'}
+  </h3>
+</div>
+
     </main>
   );
 };

@@ -4,11 +4,18 @@ import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import PropertyHeaderImage from '@/components/PropertyHeaderImage';
 import PropertyDetails from '@/components/PropertyDetails';
+import PropertyImages from '@/components/PropertyImages';
+import {convertToSerializeableObject} from '@/utils/convertToObject';
 
 
 const PropertyPage = async ({ params }) => {
   await connectDB();
-  const property = await Property.findById(params.id).lean();
+  const propertyDoc = await Property.findById(params.id)
+    .populate('type')
+    .populate('category') 
+    .lean();
+  const property = convertToSerializeableObject(propertyDoc);
+ 
 
 
   if (!property) {
@@ -46,6 +53,7 @@ const PropertyPage = async ({ params }) => {
           </div>
         </div>
       </section>
+      <PropertyImages images={property.images} />
       
     </>
   );

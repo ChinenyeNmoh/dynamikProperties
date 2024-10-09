@@ -3,6 +3,7 @@ import connectDB from '@/config/db';
 import Property from '@/models/property';
 import Pagination from '@/components/Pagination';
 import PropertySearchForm from '@/components/PropertySearchForm';
+import { convertToSerializeableObject } from '@/utils/convertToObject';
 
 const PropertiesPage = async ({ searchParams: { pageSize = 9, page = 1, location = '' } }) => {
   // Connect to the database
@@ -24,7 +25,8 @@ const PropertiesPage = async ({ searchParams: { pageSize = 9, page = 1, location
   // Get the total number of properties matching the query
   const total = await Property.countDocuments(totalQuery);
   // Fetch properties with pagination
-  const properties = await Property.find(totalQuery).skip(skip).limit(pageSize);
+  const propertiesDoc = await Property.find(totalQuery).skip(skip).limit(pageSize);
+  const properties = propertiesDoc.map(convertToSerializeableObject);
   
 
   // Determine if pagination should be shown

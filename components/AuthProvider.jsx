@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 //we will create a new component called AuthProvider
 //and wrap our layout with the session provider
 const AuthProvider = ({ children }) => {
+  
   return <SessionProvider>{children}</SessionProvider>;
 };
 export default AuthProvider;
